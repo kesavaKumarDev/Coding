@@ -1,0 +1,121 @@
+import java.util.*;
+public class Main
+{
+  public static void main (String[]args)
+  {
+	Scanner obj = new Scanner (System.in);
+	int n = obj.nextInt ();
+	  Stack < Integer > s1 = new Stack <> ();
+	  Stack < Integer > s2 = new Stack <> ();
+	  Stack < Integer > s3 = new Stack <> ();
+	for (int i = n; i >= 1; i--)
+	  {
+		s1.push (i);
+	  }
+
+	for (int i = 0; i < (int) (Math.pow (2, n)) - 1; i++)
+	  {
+
+		System.out.println ("Iteration: " + i);
+
+		if (i % 3 == 0)
+		  {
+			if (!s1.isEmpty () && s3.isEmpty ())
+			  {
+				int j = s1.pop ();
+				s3.push (j);
+				System.out.println ("s3: " + s3.peek ());
+			  }
+
+			else if (s1.isEmpty () && !s3.isEmpty ())
+			  {
+				int j = s3.pop ();
+				s1.push (j);
+				System.out.println ("s1: " + s1.peek ());
+			  }
+
+			else if (!s1.isEmpty () && !s3.isEmpty ())
+			  {
+				if (s1.peek () < s3.peek ())
+				  {
+					s3.push (s1.pop ());
+					System.out.println ("s3: " + s3.peek ());
+				  }
+				else
+				  {
+					s1.push (s3.pop ());
+					System.out.println ("s1: " + s1.peek ());
+				  }
+			  }
+
+		  }
+		else if (i % 3 == 1)
+		  {
+			if (!s1.isEmpty () && s2.isEmpty ())
+			  {
+				int j = s1.pop ();
+				s2.push (j);
+				System.out.println ("s2: " + s2.peek ());
+			  }
+
+			else if (s1.isEmpty () && !s2.isEmpty ())
+			  {
+				int j = s2.pop ();
+				s1.push (j);
+				System.out.println ("s1: " + s1.peek ());
+			  }
+
+			else if (!s1.isEmpty () && !s2.isEmpty ())
+			  {
+				if (s1.peek () < s2.peek ())
+				  {
+					s2.push (s1.pop ());
+					System.out.println ("s2: " + s2.peek ());
+				  }
+				else
+				  {
+					s1.push (s2.pop ());
+					System.out.println ("s1: " + s1.peek ());
+				  }
+			  }
+
+
+		  }
+		else if (i % 3 == 2)
+		  {
+			if (!s2.isEmpty () && !s3.isEmpty ())
+			  {
+				if (s2.peek () < s3.peek ())
+				  {
+					s3.push (s2.pop ());
+					System.out.println ("s3: " + s3.peek ());
+				  }
+				else
+				  {
+					s2.push (s3.pop ());
+					System.out.println ("s2: " + s2.peek ());
+				  }
+			  }
+
+		  }
+	  }
+
+	if (n % 2 == 0)
+	  {
+
+		while (!s2.isEmpty ())
+		  {
+			System.out.print (s2.pop () + " ");
+		  }
+	  }
+	else
+	  {
+
+		while (!s3.isEmpty ())
+		  {
+			System.out.print (s3.pop () + " ");
+		  }
+	  }
+
+  }
+}
