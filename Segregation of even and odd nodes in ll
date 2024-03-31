@@ -1,0 +1,76 @@
+import java.util.*;
+
+class Node{
+    int val;
+    Node next;
+    Node(int val){
+        this.val=val;
+        this.next=next;
+    }
+}
+
+public class Main{
+    
+    static Node head,tail;
+    
+    public static void insert(int val){
+        Node newnode=new Node(val);
+        
+        if(head==null){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail.next=newnode;
+            tail=newnode;
+        }
+    }
+    
+    public static Node segregate(Node head){
+        Node eh=new Node(-1);
+        Node et=eh;
+        Node oh=new Node(-1);
+        Node ot=oh;
+        
+        Node curr=head;
+        Node temp=null;
+        
+        while(curr!=null){
+            
+            temp=curr;
+            curr=curr.next;
+            temp.next=null;
+            
+            if(temp.val%2!=0){
+                ot.next=temp;
+                ot=temp;
+            }
+            else{
+                et.next=temp;
+                et=temp;
+            }
+        }
+        
+        et.next=oh.next;
+        
+        return eh.next;
+    }
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        int n=obj.nextInt();
+        
+        for(int i=0;i<n;i++){
+            insert(obj.nextInt());
+        }
+        
+        head= segregate(head);
+        
+        Node temp=head;
+        
+        while(temp!=null){
+            System.out.print(temp.val+" ");
+            temp=temp.next;
+        }
+    }
+}
