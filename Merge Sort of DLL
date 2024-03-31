@@ -1,0 +1,102 @@
+import java.util.*;
+
+class Node{
+    int val;
+    Node next;
+    Node prev;
+    Node(int val){
+        this.val=val;
+        this.next=null;
+        this.prev=null;
+    }
+}
+
+public class Main{
+    static Node head,tail;
+    
+    public static void insert(int val){
+        
+        Node newnode=new Node(val);
+        if(head==null){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail.next=newnode;
+            newnode.prev=tail;
+            tail=newnode;
+        }
+    }
+    
+    public static Node split(Node head){
+        Node slow=head;
+        Node fast=head;
+        
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        Node temp=slow.next;
+        temp.prev.next=null;
+        temp.prev=null;
+        return temp;
+    }
+    
+    public static Node merge(Node left,Node right){
+        Node i=left;
+        Node j=right;
+        
+        if(i==null){
+            return j;
+        }
+        
+        while(i!=null && j!=null){
+            if(i.val<j.val){
+                i.next=merge(i.next,j);
+                i.next.prev=i;
+                i.prev=null;
+                return i;
+            }
+            else{
+                j.next=merge(i,j.next);
+                j.next.prev=j;
+                j.prev=null;
+                return j;
+            }
+        }
+        
+        return i;
+    }
+    
+    public static Node mergesort(Node head){
+        if(head==null || head.next==null){
+            return head;
+        }
+        
+        Node mid=split(head);
+        Node left=mergesort(head);
+        Node right=mergesort(mid);
+        return merge(left,right);
+    }
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        
+        int n=obj.nextInt();
+        for(int i=0;i<n;i++){
+            insert(obj.nextInt());
+        }
+        head=mergesort(head);
+        
+        Node temp=head;
+        
+        while(temp!=null){
+            System.out.print(temp.val+" ");
+            temp=temp.next;
+        }
+        
+        
+        
+        
+    }
+}
