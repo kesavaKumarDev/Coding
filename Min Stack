@@ -1,0 +1,81 @@
+import java.util.*;
+
+public class Main{
+    
+    static int min;
+    static Stack<Integer> s;
+    
+    public static void push(int x){
+        if(s.isEmpty()){
+            min=x;
+            s.push(x);
+            return;
+        }
+        
+        else{
+            if(x<min){
+                s.push(2*x-min);
+                min=x;
+            }
+            else{
+                s.push(x);
+            }
+        }
+    }
+    
+    public static void peek(){
+        if(s.isEmpty()){
+            System.out.println("stack is Empty");
+            return;
+        }
+        int t=s.peek();
+        if(t<min){
+            System.out.println("peek element:"+min);
+        }
+        else{
+            System.out.println("peek element:"+t);
+        }
+    }
+    
+    public static void pop(){
+        if(s.isEmpty()){
+            System.out.println("stack is Empty");
+            return;
+        }
+        int t=s.pop();
+        if(t<min){
+            min=2*min-t;
+        }
+    }
+    
+    public static void getmin(){
+        if(s.isEmpty()){
+            System.out.println("stack is Empty");
+            return;
+        }
+        System.out.println("min:"+min);
+    }
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        
+        s=new Stack<Integer>();
+        
+        push(3);
+        peek();
+        
+        push(5);
+        peek();
+        
+        push(2);
+        peek();
+        getmin();
+        push(1);
+        
+        peek();
+        getmin();
+        
+        
+        
+    }
+}
