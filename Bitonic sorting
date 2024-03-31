@@ -1,0 +1,118 @@
+import java.util.*;
+
+class Node{
+    int val;
+    Node prev,next;
+    Node(int val){
+        this.val=val;
+        this.next=null;
+        this.prev=null;
+    }
+}
+
+public class Main{
+    static Node head,tail;
+    
+    public static void insert(int val){
+        
+        Node newnode=new Node(val);
+        if(head==null){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail.next=newnode;
+            newnode.prev=tail;
+            tail=newnode;
+        }
+    }
+    
+    public static Node reverse(Node ref){
+        Node temp1=ref;
+        Node pv1=null;
+        while(temp1!=null){
+            Node next=temp1.next;
+            temp1.next=pv1;
+            pv1=temp1;
+            temp1=next;
+        }
+        
+        return pv1;
+    }
+    
+    public static Node merge(Node left,Node right){
+        Node i=left;
+        Node j=right;
+        
+        if(i==null){
+            return j;
+        }
+        
+        while(i!=null && j!=null){
+            if(i.val<j.val){
+                i.next=merge(i.next,j);
+                i.next.prev=i;
+                i.prev=null;
+                return i;
+            }
+            else{
+                j.next=merge(i,j.next);
+                j.next.prev=j;
+                j.prev=null;
+                return j;
+            }
+        }
+        
+        return i;
+    }
+    
+    public static Node sort(Node head){
+        
+        if(head==null || head.next==null){
+            return head;
+        }
+        
+        Node temp=head.next;
+        Node pv=head;
+        while(temp!=null){
+            if(temp.val<pv.val){
+                break;
+            }
+            pv=temp;
+            temp=temp.next;
+        }
+        
+        if(temp==null){
+            return head;
+        }
+        
+        pv.next=null;
+        temp.prev=null;
+        
+        temp=reverse(temp);
+        
+        temp=merge(head,temp);
+        
+        return temp;
+        
+        
+    }
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        int n=obj.nextInt();
+        
+        for(int i=0;i<n;i++){
+            insert(obj.nextInt());
+        }
+        
+         head=sort(head);
+        
+        Node temp=head;
+        
+        while(temp!=null){
+            System.out.print(temp.val+" ");
+            temp=temp.next;
+        }
+    }
+}
