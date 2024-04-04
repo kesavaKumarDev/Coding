@@ -1,0 +1,120 @@
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Node{
+    int val;
+    Node next;
+    Node(int val){
+        this.val=val;
+        next=null;
+    }
+}
+
+public class Main
+{
+    static Node head,tail;
+
+    public static Node reverse(Node t){
+        Node dummy=t;
+        Node prev=null;
+        while(dummy!=null){
+            Node next=dummy.next;
+            dummy.next=prev;
+            prev=dummy;
+            dummy=next;
+        }
+        return prev;
+    }
+
+    public static void insert(int val){
+        Node newnode=new Node(val);
+        if(head==null){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail.next=newnode;
+            tail=newnode;
+        }
+    }
+    public static Node getkthnode(Node temp,int k){
+        k-=1;
+        while(temp!=null && k>0){
+            temp=temp.next;
+            k--;
+        }
+        
+        return temp;
+    }
+    
+    public static Node kthreverse(Node head,int k){
+        Node temp=head;
+        
+        Node pl=null;
+        
+        while(temp!=null){
+        Node kthnode=getkthnode(temp,k);
+            
+            if(kthnode==null){
+                if(pl!=null){
+                    pl.next=temp;
+                }
+                
+                break;
+            }
+        
+        
+        Node nextnode=kthnode.next;
+        
+        kthnode.next=null;
+        
+        reverse(temp);
+        
+        if(temp==head){
+            head=kthnode;
+        }
+        else{
+            pl.next=kthnode;
+        }
+        
+        
+        
+        
+        
+        pl=temp;
+        
+        temp=nextnode;
+    }
+        
+        return  head;
+    }
+
+	public static void main (String[] args) throws java.lang.Exception
+	{
+        Scanner obj=new Scanner(System.in);
+        String s=obj.nextLine();
+
+        int k=Integer.parseInt(obj.nextLine());
+
+        String[] arr=s.split(" ");
+        int n=arr.length;
+
+        for(int i=0;i<n;i++){
+            insert(Integer.parseInt(arr[i]));
+        }
+        
+        Node temp=kthreverse(head,k);
+        
+        while(temp!=null){
+            System.out.print(temp.val+" ");
+            temp=temp.next;
+        }
+
+        
+
+		
+	}
+}
