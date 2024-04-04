@@ -1,0 +1,88 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Node{
+    Node next;
+    int val;
+    Node(int val){
+        this.val=val;
+        next=null;
+    }
+}
+
+public class Main
+{
+    static Node head,tail;
+    public static void insert(int val){
+        Node newnode=new Node(val);
+        if(head==null){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail.next=newnode;
+            tail=newnode;
+        }
+    }
+    public static Node reverse(Node t){
+        Node dummy=t;
+        Node prev=null;
+        while(dummy!=null){
+            Node next=dummy.next;
+            dummy.next=prev;
+            prev=dummy;
+            dummy=next;
+        }
+        return prev;
+    }
+
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner obj=new Scanner(System.in);
+        String s=obj.nextLine();
+
+        String[] arr=s.split(" ");
+        int n=arr.length;
+        for(int i=0;i<n;i++){
+            insert(Integer.parseInt(arr[i]));
+        }
+
+        Node slow=head;
+        Node fast=head;
+
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        Node temp=slow.next;
+
+        slow.next=null;
+
+        temp=reverse(temp);
+        
+
+        Node c1=head;
+        Node c2=temp;
+
+        while(c1!=null && c2!=null){
+            Node f1=c1.next;
+            Node f2=c2.next;
+            c1.next=c2;
+            c2.next=f1;
+            c1=f1;
+            c2=f2;
+        }
+        
+        temp=head;
+        
+        while(temp!=null){
+            System.out.print(temp.val+" ");
+            temp=temp.next;
+        }
+        
+	}
+}
