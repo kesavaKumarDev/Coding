@@ -1,0 +1,88 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Node{
+    int val;
+    Node next;
+    Node(int val){
+        this.val=val;
+        next=null;
+    }
+}
+
+public class Main
+{
+    static Node head,tail;
+    public static void insert(int val){
+        Node newnode=new Node(val);
+        if(head==null){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail.next=newnode;
+            tail=newnode;
+        }
+    }
+
+    public static Node reverse(Node t){
+        Node dummy=t;
+        Node prev=null;
+        while(dummy!=null){
+            Node next=dummy.next;
+            dummy.next=prev;
+            prev=dummy;
+            dummy=next;
+        }
+
+        return prev;
+    }
+
+	public static void main (String[] args) throws java.lang.Exception
+	{
+        Scanner obj=new Scanner(System.in);
+        int n=Integer.parseInt(obj.nextLine());
+        String s=obj.nextLine();
+
+        String[] arr=s.split(" ");
+        for(int i=0;i<arr.length;i++){
+            insert(Integer.parseInt(arr[i]));
+        }
+
+        Node slow=head;
+        Node fast=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        Node temp=slow.next;
+
+        slow.next=null;
+
+        temp=reverse(temp);
+
+        Node t1=head;
+        Node t2=temp;
+
+       boolean flag=false;
+
+        while(t1!=null && t2!=null){
+            if(t1.val!=t2.val){
+                flag=true;
+                System.out.println(false);
+                break;
+            }
+            t1=t1.next;
+            t2=t2.next;
+        }
+        if(flag==false){
+            System.out.println(true);
+        }
+
+	
+	}
+}
