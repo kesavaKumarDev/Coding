@@ -1,0 +1,39 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+
+class Main
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+        Scanner obj=new Scanner(System.in);
+        String s=obj.nextLine();
+
+        Stack<Integer> st=new Stack<>();
+        st.push(-1);
+
+        int n=s.length();
+
+        int max=Integer.MIN_VALUE;
+        
+        for(int i=0;i<n;i++){
+            char c=s.charAt(i);
+            if(c=='('){
+                st.push(i);
+            }
+            else if(c==')'){
+               st.pop();
+               if(st.isEmpty()){
+                   st.push(i);
+               }
+               max=Math.max(max,i-st.peek());
+            }
+        }
+
+        System.out.println(max);
+		
+	}
+}
