@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Main{
+    public static int LSWR(String s){
+        int n=s.length();
+        int maxlength=0;
+        Set<Character> h=new HashSet<>();
+        
+        int l=0;
+        
+        for(int r=0;r<n;r++){
+            if(!h.contains(s.charAt(r))){
+                h.add(s.charAt(r));
+                maxlength=Math.max(maxlength,r-l+1);
+            }
+            else{
+                while(h.contains(s.charAt(r))){
+                    h.remove(s.charAt(l));
+                    l++;
+                }
+            }
+            h.add(s.charAt(r));
+        }
+        
+        return maxlength;
+    }
+    
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        
+        String s=obj.nextLine();
+        
+        System.out.println(LSWR(s));
+    }
+}
