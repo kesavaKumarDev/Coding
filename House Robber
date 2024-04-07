@@ -1,0 +1,46 @@
+import java.util.*;
+
+
+public class Main{
+    
+    public static int robber(int[] nums,int i,int[] dp){
+        int n=nums.length;
+        if(i>=n){
+            return 0;
+        }
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+        if(i==n-1){
+            return dp[i]=nums[i];
+        }
+        
+        return dp[i]=Math.max(robber(nums,i+1,dp),nums[i]+robber(nums,i+2,dp));
+        
+    }
+    
+    
+    
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        
+        String s=obj.nextLine();
+        String[] arr=s.split(",");
+        int n=arr.length;
+        int[] nums=new int[n];
+        for(int i=0;i<n;i++){
+            nums[i]=Integer.parseInt(arr[i]);
+        }
+        
+        int[] dp=new int[n];
+        
+        Arrays.fill(dp,-1);
+        
+        robber(nums,0,dp);
+        
+    Arrays.sort(dp);
+    
+    System.out.println(dp[n-1]);
+    }
+}
