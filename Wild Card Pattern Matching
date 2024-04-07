@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Main{
+    
+    public static boolean wildCardMat(String s1,String s2){
+        int n=s1.length();
+        int m=s2.length();
+        
+        boolean[][] dp=new boolean[n+1][m+1];
+        
+        dp[0][0]=true;
+        
+        for(int i=1;i<m+1;i++){   // if the target string has "*" then whether it makes the wild card matching or not will be checked for given empty string
+            if(s2.charAt(i-1)=='*'){
+                dp[0][i]=dp[0][i-1];
+            }
+        }
+        for(int i=1;i<n+1;i++){         // the tabulation starts here 
+            for(int j=1;j<m+1;j++){
+                if(s1.charAt(i-1)==s2.charAt(j-1) || s2.charAt(j-1)=='?'){  // if either the charcater matches or if the wild card '?' is present then no change of boolean value
+                    dp[i][j]=dp[i-1][j-1];
+                }
+                else if(s2.charAt(j-1)=='*'){     // if the character of the target string is "*" then the boolean value of (dp[i-1][j] or dp[i][j-1]) is taken
+                    dp[i][j]=dp[i-1][j]||dp[i][j-1];
+                }
+                else{                 // if no condition satisfies then simply place false;
+                    dp[i][j]=false;
+                }
+            }
+        }  
+        return dp[n][m];  // we should return the dp[n][m], whether the strings will get matched with wild acrd pattern
+    }  
+    
+    
+    
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        String s1=obj.nextLine();
+        String s2=obj.nextLine();
+        
+        boolean operations=wildCardMat(s1,s2);
+        
+        System.out.println(operations);
+    }
+}
