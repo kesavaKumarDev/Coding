@@ -1,0 +1,36 @@
+import java.util.*;
+
+
+public class Main{
+    
+    public static void sub(int[] nums,int n,int pos,List<Integer> l){
+        
+        if(pos==n){
+            if(l.size()>0){
+                System.out.println(l);
+            }
+
+            return ;
+        }
+        sub(nums,n,pos+1,l);
+        l.add(nums[pos]);
+        sub(nums,n,pos+1,l);
+        l.remove(l.size()-1);
+    }
+    
+    public static void main(String[] args){
+        Scanner obj=new Scanner(System.in);
+        int n=obj.nextInt();
+        int[] arr=new int[n];
+        
+        for(int i=0;i<n;i++){
+            arr[i]=obj.nextInt();
+        }
+        
+        List<Integer> l=new ArrayList<>();
+        
+        sub(arr,n,0,l);
+        
+        
+    }
+}
