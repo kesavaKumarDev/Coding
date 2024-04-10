@@ -1,0 +1,26 @@
+class Solution {
+    public int[] deckRevealedIncreasing(int[] deck) {
+        int n=deck.length;
+
+        int[] ans=new int[n];
+
+        Queue<Integer> q=new LinkedList<>();   // queue for storing the indexes for simulation 
+        for(int i=0;i<n;i++){
+            q.offer(i);
+        }
+        Arrays.sort(deck);           // sorting the deck array
+
+        for(int i=0;i<n;i++){
+           int u=q.peek();       
+           ans[u]=deck[i];         // add the element of the deck[i] at popped index of the queue
+           q.poll();
+
+           if(!q.isEmpty()){       // If the Index queue is not empty , then we need to pop the index and add to the queue at last
+            q.offer(q.peek());
+            q.poll();              
+           }
+
+        }
+        return ans;            // return the ans array 
+    }
+}
