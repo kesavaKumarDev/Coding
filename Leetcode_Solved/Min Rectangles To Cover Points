@@ -1,0 +1,34 @@
+class Solution {
+    public int minRectanglesToCoverPoints(int[][] points, int w) {
+
+
+        Arrays.sort(points,(a,b)->a[0]-b[0]); // for sorting the points based on the x coordinates
+
+        int n=points.length;
+
+        int index=0;
+        int count=0;
+        for(int i=0;i<n;i++){    // n number of points , we should iterate loop for that
+            int a=points[i][0];   // b-a is the width of window
+            int b=a+w;
+            boolean flag=false;
+            for(int j=i;j<n;j++){      // checking what are the points that cover under the current rectangle
+                if(points[j][0]>=a && points[j][0]<=b){
+                    if(flag==false){
+                        flag=true;
+                        count++;    // for counting the no.of rectangles required
+                    }
+                    index=j;
+                }
+                else{    // if the point is not covered under the rectangle we should break the loop
+                    break;
+                }
+            }
+            i=index;  // Assigning the index value to which it should find the points in the next iteration
+        }
+
+        return count;
+
+    
+    }
+}
