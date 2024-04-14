@@ -1,0 +1,21 @@
+class Solution {
+    public static int order(TreeNode root,boolean flag){
+        if(root==null){  // base condition
+            return 0;
+        }
+        if(root.left==null && root.right==null){   // condition for finding the left leaves 
+            if(flag==false){
+                return root.val;
+            }
+        }
+
+        int l=order(root.left,true);  // recursion call for left child
+        int r=order(root.right,false); // recursion call for right chiild
+        return l+r;  // retrurn the sum of the right leaves.
+    }
+    public int sumOfLeftLeaves(TreeNode root) {
+        boolean flag=false;
+        return order(root,flag);
+        
+    }
+}
