@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public static int order(TreeNode root,int currsum,int[] arr){
+        if(root==null){  //base condition
+            return 0;
+        }
+
+        currsum=currsum*10+root.val; // to calculate the number which is from root to leaf node
+
+        if(root.left==null && root.right==null){  // if the node is leaf then we should add it to the array 
+           arr[0]+=currsum;
+        }
+
+        order(root.left,currsum,arr); // left subtree traversal
+
+        order(root.right,currsum,arr); // right subtree traversal
+
+        return currsum;  // return the current num framed by the recursion call of the tree
+    }
+    public int sumNumbers(TreeNode root) {
+        int[] arr=new int[1];  // intialising the array
+
+        order(root,0,arr);    // invoking the function to calculate the sum Root to Leaf Numbers
+
+        return arr[0];  // return the sum
+    }
+}
