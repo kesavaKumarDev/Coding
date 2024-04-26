@@ -1,0 +1,33 @@
+class MedianFinder {
+    static PriorityQueue<Integer> arr;
+    static PriorityQueue<Integer> arr1;
+    static boolean even;
+
+    public MedianFinder() {
+        arr=new PriorityQueue<Integer>(Collections.reverseOrder());
+        arr1=new PriorityQueue<Integer>();
+        even=true;
+    }
+    
+    public void addNum(int num) {
+        if(even){
+            arr1.offer(num);
+            arr.offer(arr1.poll());
+        }
+        else{
+            arr.offer(num);
+            arr1.offer(arr.poll());
+        }
+        even=!even;
+    }
+    
+    public double findMedian() {
+        if(even){
+            return 1.0*(arr.peek()+arr1.peek())/2;
+        }
+        else{
+            return 1.0*arr.peek();
+        }
+    }
+}
+
