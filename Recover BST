@@ -1,0 +1,72 @@
+class Node{
+    int val;
+    Node left,right;
+    Node(int val){
+        this.val=val;
+        this.left=null;
+        this.right=null;
+    }
+}
+
+public class Main{
+    static Node first,middle,last,prev;
+    
+    public static void binaryrec(Node root){
+        
+        if(root==null){
+            return;
+        }
+        
+        binaryrec(root.left);
+        
+        if(prev!=null && root.val<prev.val){
+            if(first==null){
+                first=prev;
+                middle=root;
+            }
+            else{
+                last=root;
+            }
+        }
+        
+        prev=root;
+        
+        binaryrec(root.right);
+    }
+    
+    public static void inorder(Node root){
+        if(root==null){
+            return;
+        }
+        
+        inorder(root.left);
+        System.out.print(root.val+" ");
+        inorder(root.right);
+    }
+   
+    public static void main(String[] args){
+        first=middle=last=null;
+        prev =new Node(Integer.MIN_VALUE);
+        Node root=new Node(3);
+        root.left=new Node(1);
+        root.right=new Node(4);
+        root.right.left=new Node(2);
+        
+        binaryrec(root);
+        
+        if(first!=null && last!=null){
+            int t=first.val;
+            first.val=last.val;
+            last.val=t;
+        }
+        else if(first!=null && middle!=null){
+            int t=first.val;
+            first.val=middle.val;
+            middle.val=t;
+        }
+        
+        inorder(root);
+        
+        
+    }
+}
