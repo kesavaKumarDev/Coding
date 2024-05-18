@@ -1,0 +1,57 @@
+import java.util.*;
+
+public class Main{
+    
+    static int total;
+    
+    public static void permutate(int i,String s){
+        
+        if(i==s.length()-1){
+            System.out.println(s);
+            total++;
+            return;
+        }
+        
+        char prev='*';
+        
+        for(int j=i;j<s.length();j++){
+            
+            char[] temp=s.toCharArray();
+            if(j>i && temp[i]==temp[j]){
+                continue;
+            }
+            
+            if(prev!='*' && prev==s.charAt(j)){
+                continue;
+            }
+            
+            swap(temp,j,i);
+            prev=s.charAt(j);
+            
+            permutate(i+1,String.valueOf(temp));
+        }
+    }
+    
+    public static void swap(char[] temp,int j,int i){
+        char t=temp[j];
+        temp[j]=temp[i];
+        temp[i]=t;
+    }
+    
+    public static void main(String[] args){
+        String s="abc";
+        
+        total=0;
+        
+        char[] c=s.toCharArray();
+        
+        Arrays.sort(c);
+        
+        s=String.valueOf(c);
+        
+        permutate(0,s);
+        
+        System.out.println(total);
+        
+    }
+}
