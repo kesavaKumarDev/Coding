@@ -1,0 +1,104 @@
+import java.util.*;
+
+class Node{
+    int val;
+    Node left,right;
+    Node(int val){
+        this.val=val;
+        this.right=null;
+        this.left=null;
+    }
+}
+
+
+public class Main{
+    
+    public static boolean Leaf(Node root){
+        return root.left==null && root.right==null;
+    }
+    
+    public static void leftboundary(Node root,List<Integer> ans){
+        Node curr=root.left;
+        
+        while(curr!=null){
+            
+            if(!Leaf(curr)){
+                ans.add(curr.val);
+            }
+            
+            if(curr.left!=null){
+                curr=curr.left;
+            }
+            else{
+                curr=curr.right;
+            }
+        }
+    }
+    public static void rightboundary(Node root,List<Integer> ans){
+        Node curr=root.right;
+        List<Integer> res=new ArrayList<Integer>();  // take a separate list 
+        
+        while(curr!=null){
+            
+            if(!Leaf(curr)){
+                res.add(curr.val);
+            }
+            
+            if(curr.right!=null){
+                curr=curr.right;
+            }
+            else{
+                curr=curr.left;
+            }
+        }
+        
+        for(int i=res.size()-1;i>=0;i--){
+            ans.add(res.get(i));
+        }
+    }
+    
+    public static void leaves(Node root,List<Integer> ans){  // inorder traversl and adding only leafs to the list
+        if(Leaf(root)){
+            ans.add(root.val);
+            return;
+        }
+        
+          leaves(root.left,ans);
+          leaves(root.right,ans);
+    }
+    
+    public static List<Integer> bound(Node root){
+        List<Integer> ans=new ArrayList<>();
+        
+        if(root==null){
+            return ans;
+        }
+        
+        if(!Leaf(root)){  // add root separately
+            ans.add(root.val);
+        }
+        
+        leftboundary(root,ans);
+        leaves(root,ans);
+        rightboundary(root,ans);
+        
+        return ans;
+        
+    }
+    public static void main(String[] args){
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+
+        
+       List<Integer> ans=bound(root);
+       
+       for(int l: ans){
+           System.out.print(l+" ");
+       } 
+    }
+}
