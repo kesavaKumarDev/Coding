@@ -1,0 +1,44 @@
+import java.util.*;
+
+class Node{
+    int val;
+    Node left,right;
+    Node(int val){
+        this.val=val;
+        this.left=null;
+        this.right=null;
+    }
+}
+
+public class Main{
+    
+    public static void view(Node root,int level,ArrayList<Integer> l){
+        if(root==null){
+            return;
+        }
+        
+        if(level==l.size()){
+            l.add(root.val);
+        }
+        
+        view(root.right,level+1,l);
+        
+        view(root.left,level+1,l);
+        
+        
+    }
+    
+    public static void main(String[] args){
+        Node root=new Node(2);
+        root.left=new Node(3);
+        root.right=new Node(4);
+        root.left.left=new Node(5);
+        root.right.right= new Node(7);
+        
+        ArrayList<Integer> l=new ArrayList<Integer>();
+        
+        view(root,0,l);
+        
+        System.out.println(l);
+    }
+}
