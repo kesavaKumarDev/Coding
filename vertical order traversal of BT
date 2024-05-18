@@ -1,0 +1,101 @@
+import java.util.*;
+
+class Node{
+    int val;
+    Node left,right;
+    Node(int val){
+        this.val=val;
+        this.right=null;
+        this.left=null;
+    }
+}
+
+class Pair{
+    int level,line;
+    Node node;
+    Pair(Node node,int line,int level){
+        this.node=node;
+        this.line=line;
+        this.level=level;
+    }
+}
+
+public class Main{
+    
+    public static List<List<Integer>> order(Node root){
+        
+        List<List<Integer>> ans=new ArrayList<>();
+        
+        if(root==null){
+            return ans;
+        }
+        
+        Queue<Pair> q=new LinkedList<>();
+        
+        TreeMap<Integer,TreeMap<Integer,PriorityQueue<Integer>>> m=new TreeMap<>();
+        
+        q.offer(new Pair(root,0,0));
+        
+        while(!q.isEmpty()){
+            Pair p=q.poll();
+            Node node=p.node;
+            int line=p.line;
+            int level=p.level;
+            
+            if(!m.containsKey(line)){
+                m.put(line,new TreeMap<>());
+            }
+            if(!m.get(line).containsKey(level)){
+                m.get(line).put(level,new PriorityQueue<>());
+            }
+            m.get(line).get(level).offer(node.val);
+            
+            
+            if(node.left!=null){
+                q.offer(new Pair(node.left,line-1,level+1));
+            }
+            
+            if(node.right!=null){
+                q.offer(new Pair(node.right,line+1,level+1));
+            }
+            
+        }
+        
+        for(TreeMap<Integer,PriorityQueue<Integer>> r:m.values()){
+            ans.add(new ArrayList<>());
+            for(PriorityQueue<Integer> pq: r.values()){
+                while(!pq.isEmpty()){
+                    ans.get(ans.size()-1).add(pq.poll());
+                }
+            }
+        }
+        return ans;
+    }
+    public static void main(String[] args){
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.left.left = new Node(4);
+        root.left.right = new Node(10);
+        root.left.left.right = new Node(5);
+        root.left.left.right.right = new Node(6);
+        root.right = new Node(3);
+        root.right.right = new Node(10);
+        root.right.left = new Node(9);
+
+        
+       List<List<Integer>> l=order(root);
+       
+       for(List<Integer> arr : l){
+           for(int i : arr){
+               System.out.print(i+" ");
+           }
+           System.out.println();
+       }
+       
+       
+    }
+}
+
+
+
+
