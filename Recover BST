@@ -11,6 +11,22 @@ class Node{
 public class Main{
     static Node first,middle,last,prev;
     
+    public static Node insert(Node root,int val){
+        
+        if(root==null){
+            return new Node(val);
+        }
+        
+        if(val<root.val){
+            root.left=insert(root.left,val);
+        }
+        else{
+            root.right=insert(root.right,val);
+        }
+        
+        return root;
+    }
+    
     public static void binaryrec(Node root){
         
         if(root==null){
@@ -44,15 +60,35 @@ public class Main{
         inorder(root.right);
     }
    
+    public static void swap(Node a,Node b){
+        int t=a.val;
+        a.val=b.val;
+        b.val=t;
+        
+        //
+        Node t1=a.left=
+        a.left=b.left;
+        b.left=t1;
+        
+        t1=a.right;
+        a.right=b.right;
+        b.right=t1;
+    }
+   
     public static void main(String[] args){
         first=middle=last=null;
         prev =new Node(Integer.MIN_VALUE);
-        Node root=new Node(3);
-        root.left=new Node(1);
-        root.right=new Node(4);
-        root.right.left=new Node(2);
+        Node root=null;
+        root=insert(root,3);
+        insert(root,1);
+        insert(root,2);
+        insert(root,4);
+        
+        swap(root.right,root.left.right);
         
         binaryrec(root);
+        
+        
         
         if(first!=null && last!=null){
             int t=first.val;
@@ -70,3 +106,5 @@ public class Main{
         
     }
 }
+
+
