@@ -1,0 +1,41 @@
+import java.util.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner obj=new Scanner(System.in);
+		String s=obj.next();
+		
+		int k=obj.nextInt();
+		int n=s.length();
+		
+		int l=0,r=0,len=0;
+		
+		Map<Character,Integer> h=new HashMap<>();
+		
+		while(r<n){
+		    char c=s.charAt(r);
+		    
+		    h.put(c,h.getOrDefault(c,0)+1);
+		    
+		    if(h.size()>k){
+		        if(h.containsKey(s.charAt(l))){
+		            if(h.get(s.charAt(l))>1){
+		                h.put(s.charAt(l),h.get(s.charAt(l))-1);
+		            }
+		            else{
+		                h.remove(s.charAt(l));
+		            }
+		        }
+		        l++;
+		    }
+		    
+		    if(h.size()<=k){
+		        len=Math.max(len,r-l+1);
+		    }
+		    r++;
+		}
+		
+		System.out.println(len);
+	}
+}
