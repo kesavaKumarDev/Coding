@@ -1,0 +1,12 @@
+class Pair<U, V> {  // generic class
+    private U key;
+    private V value;
+
+    public Pair(U key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public U getKey() { return key; }
+    public V getValue() { return value; }
+}
