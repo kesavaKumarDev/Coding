@@ -1,0 +1,23 @@
+public static void fun(Node root){
+        if(root==null){  // return null if there is no node
+            return;
+        }
+        
+        int child=0;  // checking the sum of the left and right child sum is greater or equal or lesser. it was calculated when travelling down
+        if(root.left!=null) child+=root.left.data;
+        if(root.right!=null) child+=root.right.data;
+        
+        if(child>=root.data) root.data=child;  // if it was equal or greater than assign it to the root val
+        else{
+            if(root.left!=null) root.left.data=root.data;  // if it is lesser then assign to the left node if it exists 
+            if(root.right!=null) root.right.data=root.data; // if it is lesser then assign to the right node if it exists
+        }
+        
+        fun(root.left);
+        fun(root.right); // for traversing to the left and right and subtree
+        
+        int sum=0;   // this sum is calculated when travelling back toward root , to ensure children sum property
+        if(root.left!=null) sum+=root.left.data;  // if the left child exits and sum the value to the variable  
+        if(root.right!=null) sum+=root.right.data; // simailar to the above step 
+        if(root.left!=null || root.right!=null) root.data=sum;  // if the node is not a leaf node , assign the summation of left and right child data to the root of the tree.
+    }
